@@ -1,0 +1,16 @@
+---
+- name: Get Configuration using gNMI
+  gather_facts: false
+  hosts: nokia
+
+  collections:
+  - nokia.grpc
+
+  tasks:
+  - name: Get Nodal Configuration (using gNMI GET)
+    gnmi_get:
+    register: testout
+
+  - name: dump test output
+    debug:
+      msg: '{{ testout.output }}'

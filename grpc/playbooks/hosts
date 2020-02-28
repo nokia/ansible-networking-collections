@@ -1,0 +1,11 @@
+[nokia]
+135.228.158.92 ansible_user=grpc ansible_password=Nokia4gnmi
+
+[nokia:vars]
+ansible_network_os=nokia.sros.md
+ansible_root_certificates_file=CAcert.pem
+ansible_port=57400
+ansible_connection=nokia.grpc.gnmi
+ansible_gnmi_encoding=JSON
+#ansible_grpc_channel_options={'grpc.ssl_target_name_override': 'localhost'}
+ansible_grpc_environment={'GRPC_SSL_CIPHER_SUITES': 'AES128', 'HTTPS_PROXY': None}

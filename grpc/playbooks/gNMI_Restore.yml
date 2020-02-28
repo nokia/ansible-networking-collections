@@ -1,0 +1,19 @@
+---
+- name: NE Restore using gNMI
+  gather_facts: false
+  hosts: nokia
+
+  collections:
+  - nokia.grpc
+
+  tasks:
+  - name: NE Restore (using gNMI SET)
+    gnmi_config:
+      replace:
+        - path: /
+          val: "{{ lookup('file', '/tmp/'+inventory_hostname+'.config') }}"
+    register: testout
+
+  - name: dump test output
+    debug:
+      msg: '{{ testout.output }}'

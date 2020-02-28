@@ -1,0 +1,61 @@
+---
+- hosts: nokia
+  vars:
+    - ansible_network_os: nokia.sros.md
+  vars_prompt:
+    - name: ansible_user
+      prompt: "Username"
+      private: no
+    - name: ansible_password
+      prompt: "Password"
+  connection: network_cli
+  gather_facts: No
+
+  collections:
+  - nokia.sros
+
+  tasks:
+  - name: get system information
+    cli_command:
+      command: show system information
+    register: output1
+
+  - name: switch mode classic
+    cli_command:
+      command: /!classic-cli
+    register: output2
+
+  - name: file dir (classic)
+    cli_command:
+      command: file dir
+    register: output3
+
+  - name: switch mode md-cli
+    cli_command:
+      command: /!md-cli
+    register: output4
+
+  - name: show version
+    cli_command:
+      command: show version
+    register: output5
+
+  - name: reboot node (abort)
+    cli_command:
+      command: admin reboot
+      prompt:
+        - "Are you sure you want to reboot (y/n)?"
+      answer:
+        - 'n'
+    register: output6
+
+  - name: display system information
+    debug:
+      msg: |
+        {{output1.stdout}}
+        {{output2.stdout}}
+        {{output3.stdout}}
+        {{output4.stdout}}
+        {{output5.stdout}}
+        {{output6.stdout}}
+...

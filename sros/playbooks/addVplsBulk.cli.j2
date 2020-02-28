@@ -1,0 +1,10 @@
+configure service
+{% for idx in range(20) %}
+  vpls demo_{{ idx+10000 }}
+    service-id {{ idx+10000 }}
+    customer 1
+    description "bulk configuration demo"
+    admin-state disable
+  exit
+{% endfor %}
+exit all

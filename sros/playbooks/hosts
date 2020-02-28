@@ -1,0 +1,17 @@
+[nokia]
+135.228.152.229
+135.228.152.77
+135.228.153.107
+135.228.154.149
+
+[nokia_classic]
+135.228.158.99
+135.228.157.127
+135.228.158.109
+135.228.156.25
+
+[nokia:vars]
+ansible_network_os=nokia.sros.md
+
+[nokia_classic:vars]
+ansible_network_os=nokia.sros.classic

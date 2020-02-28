@@ -1,0 +1,56 @@
+---
+- name: gNMI SET/GET demo for Nokia SROS
+  gather_facts: false
+  hosts: nokia
+
+#  vars:
+#    ansible_grpc_channel_options:
+#      grpc.ssl_target_name_override: 135.228.158.92
+#    ansible_grpc_environment:
+#      GRPC_VERBOSITY: DEBUG
+#      GRPC_TRACE: all
+#    ansible_persistent_log_messages: True
+
+  collections:
+  - nokia.grpc
+
+  tasks:
+  - name: Get Nodal Configuration (Selective Branches)
+    gnmi_get:
+      type: CONFIG
+      prefix: /configure
+      path:
+        - system/location
+        - system/contact
+        - service/md-auto-id
+        - port[port-id=1/1/1]
+    register: testout
+
+  - name: dump test output
+    debug:
+      msg: '{{ testout.output }}'
+
+  - name: Update Nodal Configuration (using gNMI SET)
+    gnmi_config:
+      prefix: configure
+      update:
+        - path: system/location
+          val: Australia
+        - path: system/contact
+          val: NOKIA
+      replace:
+        - path: service/md-auto-id
+          val:
+            service-id-range:
+              start: 10000
+              end: 99999
+            customer-id-range:
+              start: 10000
+              end: 10999
+      delete:
+        - system/cron
+    register: testout
+
+  - name: dump test output
+    debug:
+      msg: '{{ testout.output }}'

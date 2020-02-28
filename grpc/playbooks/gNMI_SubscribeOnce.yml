@@ -1,0 +1,19 @@
+---
+- name: gNMI Subscribe ONCE
+  gather_facts: false
+  hosts: nokia
+
+  collections:
+  - nokia.grpc
+
+  tasks:
+  - name: Get Nodal Configuration (using gNMI Subscribe/ONCE)
+    gnmi_subscribe:
+      mode: ONCE
+      subscription:
+        - path: /
+    register: testout
+
+  - name: dump test output
+    debug:
+      msg: '{{ testout.output }}'

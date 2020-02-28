@@ -1,0 +1,32 @@
+---
+- hosts: nokia
+  vars:
+    - ansible_network_os: nokia.sros.md
+  vars_prompt:
+    - name: ansible_user
+      prompt: "Username"
+      private: no
+    - name: ansible_password
+      prompt: "Password"
+  connection: netconf
+  gather_facts: No
+
+  collections:
+  - nokia.sros
+
+  tasks:
+  - name: get state
+    netconf_get:
+      filter: <state xmlns="urn:nokia.com:sros:ns:yang:sr:state"><system/></state>
+      display: json
+    register: result
+
+  - name: save result
+    set_fact:
+      my_var: "{{ result }}"
+
+  - name: display results
+    debug:
+      var: my_var.output.data.state.system.version
+
+...

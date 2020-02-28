@@ -1,0 +1,5 @@
+configure service
+{% for idx in range(20) %}
+  delete vpls demo_{{ idx+10000 }}
+{% endfor %}
+exit all

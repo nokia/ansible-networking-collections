@@ -1,0 +1,16 @@
+---
+- name: gNMI Capabilities
+  gather_facts: false
+  hosts: nokia
+
+  collections:
+  - nokia.grpc
+
+  tasks:
+  - name: gNMI Capabilities
+    gnmi_capabilities:
+    register: testout
+
+  - name: dump test output
+    debug:
+      msg: '{{ testout.output }}'

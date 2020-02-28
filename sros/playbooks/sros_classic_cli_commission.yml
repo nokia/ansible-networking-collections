@@ -1,0 +1,30 @@
+---
+- hosts: nokia_classic
+  vars:
+    - ansible_network_os: nokia.sros.classic
+  vars_prompt:
+    - name: ansible_user
+      prompt: "Username"
+      private: no
+    - name: ansible_password
+      prompt: "Password"
+  connection: network_cli
+  gather_facts: No
+
+  collections:
+  - nokia.sros
+
+  tasks:
+    - name: Create rollback directory
+      cli_command:
+        command: file md cf3:/rollbacks
+      register: command_result
+      failed_when: "'already exists' not in command_result.msg"
+
+    - name: Configure rollback location
+      cli_command:
+        command: "{{item}}"
+      loop:
+        - configure system rollback rollback-location cf3:/rollbacks/config
+        - admin rollback save
+...

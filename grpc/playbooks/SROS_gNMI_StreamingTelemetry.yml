@@ -1,0 +1,27 @@
+---
+- name: Nokia SR OS Streaming Telemetry over gNMI
+  gather_facts: false
+  hosts: nokia
+
+  collections:
+  - nokia.grpc
+
+  tasks:
+  - name: gNMI streaming telemetry
+    gnmi_subscribe:
+      duration: 5
+      prefix: /state
+      mode: STREAM
+      subscription:
+        - path: /port[port-id=1/1/1]/ethernet/statistics
+          mode: SAMPLE
+          sampleInterval: '1000000000'
+        - path: /port[port-id=1/1/2]/ethernet/statistics
+          mode: SAMPLE
+          sampleInterval: '1000000000'
+    register: testout
+
+  - name: dump test output
+    debug:
+      msg: '{{ testout.output }}'
+

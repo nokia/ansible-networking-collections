@@ -1,0 +1,21 @@
+namespace: nokia
+name: grpc
+version: 1.0.0
+readme: README.md
+authors:
+- Hans Thienpondt (@HansThienpondt)
+- Sven Wisotzky (@wisotzky)
+description: Ansible collection to support networking devices using gNMI
+license: BSD-3-Clause
+tags:
+- ansible
+- grpc
+- gnmi
+- networking
+- yang
+- openconfig
+
+repository: http://github.com/nokia/ansible-networking-collections/grpc
+documentation: http://github.com/nokia/ansible-networking-collections/grpc
+homepage: http://github.com/nokia/ansible-networking-collections/grpc
+issues: http://github.com/nokia/ansible-networking-collections/issues

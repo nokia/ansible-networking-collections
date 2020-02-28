@@ -1,0 +1,24 @@
+---
+- hosts: all
+  vars_prompt:
+    - name: ansible_user
+      prompt: "Username"
+      private: no
+    - name: ansible_password
+      prompt: "Password"
+  connection: network_cli
+  gather_facts: No
+
+  collections:
+  - nokia.sros
+
+  tasks:
+  - name: get device info
+    device_info:
+    register: device_info
+
+  - name: display device info
+    debug:
+      msg: |
+        {{device_info.output}}
+...

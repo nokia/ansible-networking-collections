@@ -1,0 +1,20 @@
+---
+- name: NE Backup using gNMI
+  gather_facts: false
+  hosts: nokia
+
+  collections:
+  - nokia.grpc
+
+  tasks:
+  - name: Get NE Backup
+    gnmi_config:
+      backup: yes
+      backup_options:
+        dir_path: /tmp
+        filename: "{{ inventory_hostname+'.config' }}"
+    register: backup_info
+
+  - name: backup details
+    debug:
+      msg: "{{backup_info}}"
