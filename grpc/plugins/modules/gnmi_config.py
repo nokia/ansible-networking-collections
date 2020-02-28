@@ -148,7 +148,7 @@ def main():
                 if module._diff:
                     result['diff'] = {'before': snapshot1, 'after': snapshot2}
                 if module.params["backup"]:
-                    result['__backup__'] = snapshot1     
+                    result['__backup__'] = snapshot1
         elif module.params["backup"]:
             # backup only: take full config snapshot an return
             snapshot = connection.gnmiGet(type='config', path=['/'])

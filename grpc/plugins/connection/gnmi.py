@@ -328,7 +328,7 @@ class Connection(NetworkConnectionBase):
 
         grpcEnv = self.get_option('grpc_environment') or {}
         if not isinstance(grpcEnv, dict):
-             raise AnsibleConnectionFailure("grpc_environment must be a dict")
+            raise AnsibleConnectionFailure("grpc_environment must be a dict")
 
         for key in grpcEnv:
             if grpcEnv[key]:
