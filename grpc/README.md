@@ -21,6 +21,11 @@ To install this collection, please use the following command:
 ansible-galaxy collection install nokia.grpc
 ```
 
+If you have already installed a previous version, you can  upgrade to the latest version of this collection, by adding the `--force-with-deps` option:
+```bash
+ansible-galaxy collection install nokia.grpc --force-with-deps
+```
+
 ## Usage
 To use the gNMI modules from this collection, please make sure to set `ansible_connection` variable to `nokia.grpc.gnmi`. Due to the nature of gNMI being vendor agnostic, the `network_os` does not have any impact to the function of this module.
 

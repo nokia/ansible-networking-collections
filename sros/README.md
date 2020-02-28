@@ -14,7 +14,6 @@ ansible-galaxy collection install nokia.sros
 
 If you have already installed a previous version, you can  upgrade to the latest version of this collection, by adding the `--force-with-deps` option:
 ```bash
-```bash
 ansible-galaxy collection install nokia.sros --force-with-deps
 ```
 

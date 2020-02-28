@@ -1,6 +1,6 @@
 namespace: nokia
 name: grpc
-version: 1.0.0
+version: 1.0.1
 readme: README.md
 authors:
 - Hans Thienpondt (@HansThienpondt)
@@ -15,7 +15,7 @@ tags:
 - yang
 - openconfig
 
-repository: http://github.com/nokia/ansible-networking-collections/grpc
-documentation: http://github.com/nokia/ansible-networking-collections/grpc
-homepage: http://github.com/nokia/ansible-networking-collections/grpc
+repository: http://github.com/nokia/ansible-networking-collections/blob/master/grpc
+documentation: http://github.com/nokia/ansible-networking-collections/blob/master/grpc
+homepage: http://github.com/nokia/ansible-networking-collections/blob/master/grpc
 issues: http://github.com/nokia/ansible-networking-collections/issues

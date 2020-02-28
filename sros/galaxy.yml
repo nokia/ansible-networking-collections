@@ -1,6 +1,6 @@
 namespace: nokia
 name: sros
-version: 1.4.3
+version: 1.4.4
 readme: README.md
 authors:
 - Sven Wisotzky <sven.wisotzky@nokia.com>
@@ -21,7 +21,7 @@ tags:
 - terminal
 - ansible
 
-repository: http://github.com/nokia/ansible-networking-collections/sros
-documentation: http://github.com/nokia/ansible-networking-collections/sros
-homepage: http://github.com/nokia/ansible-networking-collections/sros
+repository: http://github.com/nokia/ansible-networking-collections/blob/master/sros
+documentation: http://github.com/nokia/ansible-networking-collections/blob/master/sros
+homepage: http://github.com/nokia/ansible-networking-collections/blob/master/sros
 issues: http://github.com/nokia/ansible-networking-collections/issues
