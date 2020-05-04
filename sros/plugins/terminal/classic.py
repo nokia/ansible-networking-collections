@@ -22,8 +22,8 @@ from ansible.module_utils._text import to_text
 
 class TerminalModule(TerminalBase):
     terminal_stdout_re = [
-        re.compile(br"[\r\n]+\!?\*?(\((ex|gl|pr|ro)\))?\[.*\][\r\n]+[ABCD]\:\S+\@\S+\#\s"),
-        re.compile(br"[\r\n]+\*?[ABCD]:[\w\-\.\>]+[#\$]\s")
+        re.compile(br"[\r\n]*\!?\*?(\((ex|gl|pr|ro)\))?\[.*\][\r\n]+[ABCD]\:\S+\@\S+\#\s"),
+        re.compile(br"[\r\n]*\*?[ABCD]:[\w\-\.\>]+[#\$]\s")
     ]
 
     terminal_stderr_re = [
