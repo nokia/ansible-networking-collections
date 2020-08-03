@@ -18,3 +18,7 @@ Ansible collections contributed by Nokia are available from: https://galaxy.ansi
 #### Planned
 * [Nuage collection](nuage)
 * [NetAct collection](netact)
+
+## License
+
+This project is licensed under the BSD-3-Clause license - see the [LICENSE](https://github.com/nokia/ansible-networking-collections/blob/master/LICENSE).
