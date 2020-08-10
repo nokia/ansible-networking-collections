@@ -194,6 +194,6 @@ class Cliconf(CliconfBase):
 
         if match:
             if commit:
-                self.send_command('admin rollback revert {0}'.format(rollback_id))
+                self.send_command('admin rollback revert {0} now'.format(rollback_id))
             return {'diff': match.group(1).strip()}
         return {}
