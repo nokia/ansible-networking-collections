@@ -79,23 +79,23 @@ For example:
 This Ansible collection also contains a playbook, on how to enable rollbacks:
 [sros_classic_cli_commission.yml](https://raw.githubusercontent.com/nokia/ansible-networking-collections/master/sros/playbooks/sros_classic_cli_commission.yml).
 
-After every successful configuration request one need to make sure, that a new
-checkpoint is created. If the configuration was changed through this Ansible
-plugin, the checkpoint is automatically created.
-
 Snapshot/rollback is used the following way:
+* A new temporary rollback checkpoint is created at the beginning of every
+  cli_config operation.
 * If a configuration request runs into an error, the configuration is restored
-  by rolling back to the last checkpoint. It actually translates to a
-  rollback-on-error behavior.
-* After the configuration change was made, the running configuration is
-  compared against the previous checkpoint (supported nodal feature). This
-  is needed to provide the `change` indicator, but also to provide the
-  actual differences, if the `--diff` option was entered.
+  by rolling back to the checkpoint that was created before. This actually
+  translates to a rollback-on-error behavior.
+* If the configuration request is successful, the running configuration is
+  compared against the previous checkpoint using the underlying nodal feature.
+  This is needed to provide the `change` indicator, but also to provide the
+  actual differences, if the `--diff` option is used.
 * If operator requests to do a dry-run by providing the `--check` option,
   the change is actually executed against the running config and reverted
-  to the last checkpoint straight away. Following that approach, syntax and
+  to the checkpoint straight away. Following that approach, syntax and
   semantic checks will be executed - but also we get `change` indication
   including the list of differences, if `--diff` option was provided.
+* At the end of the cli_config operation the checkpoint created will be
+  deleted to keep a clean rollback history.
 
 WARNING:
 * Be aware, that dry-run is implemented as short duration activation of the
@@ -111,6 +111,7 @@ RESTRICTIONS:
 * Some platforms might not support checkpoint/rollback
 * Changes are always written directly to running
 * Operation replace is currently not supported
+* The oldest rollback checkpoint is removed after plugin operation.
 
 ### MD MODE
 To have the NETCONF plugin working, PR [#65718](https://github.com/ansible/ansible/pull/65718) has been integrated into `ansible:devel`. So the change should become active as part of the next Ansible release, which is Ansible 2.10.

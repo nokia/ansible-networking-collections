@@ -138,6 +138,7 @@ class Cliconf(CliconfBase):
 
         try:
             self.send_command('exit all')
+            self.send_command('admin rollback save')  # Save rollback to compare if changes occur. This rollback will be removed upon module completion.
             for cmd in to_list(candidate):
                 if isinstance(cmd, Mapping):
                     requests.append(cmd['command'])
@@ -149,6 +150,7 @@ class Cliconf(CliconfBase):
         except AnsibleConnectionFailure as exc:
             self.send_command('exit all')
             self.send_command('admin rollback revert latest-rb')
+            self.send_command('admin rollback delete latest-rb')
             raise exc
 
         self.send_command('exit all')
@@ -156,7 +158,7 @@ class Cliconf(CliconfBase):
         match = re.search(r'\r?\n-+\r?\n(.*)\r?\n-+\r?\n', rawdiffs, re.DOTALL)
         if match:
             if commit:
-                self.send_command('admin rollback save')
+                pass
             else:
                 # Special hack! We load the config to running and rollback
                 # to just figure out the delta. this might be risky in
@@ -164,8 +166,12 @@ class Cliconf(CliconfBase):
                 # become temporary active.
 
                 self.send_command('admin rollback revert latest-rb')
+            # Remove latest rollback to leave rollback history intact.
+            self.send_command('admin rollback delete latest-rb')
             return {'request': requests, 'response': responses, 'diff': match.group(1)}
         else:
+            # Remove latest rollback to leave rollback history intact.
+            self.send_command('admin rollback delete latest-rb')
             return {'request': requests, 'response': responses}
 
     def get(self, command, prompt=None, answer=None, sendonly=False, output=None, newline=True, check_all=False):
@@ -188,9 +194,6 @@ class Cliconf(CliconfBase):
 
         if match:
             if commit:
-                # After executing the rollback another checkpoint is generated
-                # This is required, to align running and latest-rb for follow-up requests
-                self.send_command('admin rollback revert {0}'.format(rollback_id))
-                self.send_command('admin rollback save')
+                self.send_command('admin rollback revert {0} now'.format(rollback_id))
             return {'diff': match.group(1).strip()}
         return {}
