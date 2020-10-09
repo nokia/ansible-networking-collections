@@ -58,11 +58,11 @@ Example result:
 None
 
 ## Plugins
-|     Network OS           | terminal | cliconf | netconf |
-|--------------------------|:--------:|:-------:|:-------:|
-| nokia.sros.md            |     Y    |    Y    |    Y    |
-| nokia.sros.classic       |     Y    |    Y    |    -    |
-| nokia.sros.classic_light |     Y    |    Y    |    -    |
+|     Network OS      | terminal | cliconf | netconf |
+|---------------------|:--------:|:-------:|:-------:|
+| nokia.sros.md       |     Y    |    Y    |    Y    |
+| nokia.sros.classic  |     Y    |    Y    |    -    |
+| nokia.sros.light    |     Y    |    Y    |    -    |
 
 
 ### CLASSIC MODE
@@ -81,7 +81,8 @@ For example:
 This Ansible collection also contains a playbook, on how to enable rollbacks:
 [sros_classic_cli_commission.yml](https://raw.githubusercontent.com/nokia/ansible-networking-collections/master/sros/playbooks/sros_classic_cli_commission.yml).
 
-Note: if platform of SROS release doesn't support rollback use classic_light plugin.
+Note: Use `nokia.sros.light` for SR OS nodes that don't support rollback or if the use of the
+rollback is not desired.
 
 
 Snapshot/rollback is used the following way:
@@ -90,23 +91,23 @@ Snapshot/rollback is used the following way:
 * If a configuration request runs into an error, the configuration is restored
   by rolling back to the checkpoint that was created before. This actually
   translates to a rollback-on-error behavior.
-* If the configuration request is successful, the running configuration is
+* If the configuration request is successful, the new running configuration is
   compared against the previous checkpoint using the underlying nodal feature.
   This is needed to provide the `change` indicator, but also to provide the
   actual differences, if the `--diff` option is used.
 * If operator requests to do a dry-run by providing the `--check` option,
-  the change is actually executed against the running config and reverted
-  to the checkpoint straight away. Following that approach, syntax and
+  the change is executed against the running config and reverted to the
+  checkpoint straight away. Following that approach, syntax and
   semantic checks will be executed - but also we get `change` indication
   including the list of differences, if `--diff` option was provided.
 * At the end of the cli_config operation the checkpoint created will be
   deleted to keep a clean rollback history.
 
 WARNING:
-* Be aware, that dry-run is implemented as short duration activation of the
-  new configuration with immediate rollback. So there might be service impact
-  because of this to be considered.
-* Rollback on error might have side-effects based on the way SR OS has implemented
+* Be aware, that dry-run is implemented as temporary activation of the
+  new configuration with immediate rollback. Users need to consider potential
+  service impact because of this.
+* Rollback-on-error might have side-effects based on the way SR OS has implemented
   the checkpoint/rollback feature. In its operation for impacted modules (such
   as BGP within VPRN) it reverts to default configuration (e.g. shutdown) prior
   to the execution of commands to revert the checkpoint's configuration. Please
@@ -115,18 +116,23 @@ WARNING:
 RESTRICTIONS:
 * Some platforms might not support checkpoint/rollback
 * Changes are always written directly to running
-* Operation replace is currently not supported
+* Operation `replace` is currently not supported
 * The oldest rollback checkpoint is removed after plugin operation.
 
 
-### CLASSIC_LIGHT MODE
-This mode is for older releases which do not support rollback feature.
-Instead of rollback feature this plugin relies on prompt analysis to determine if there was a change made by cli_config
- task. If a change causes asterisk to appear before prompt, then the task is considered as changed.
+### LIGHT MODE
+The use of `nokia.sros.classic` depends on the nodal rollback feature and comes with
+a set of side-effects as discussed before. In cases where the rollback feature is not
+supported, for example when using older SR OS releases, or if the use of the rollback
+is not desired `nokia.sros.light` should be used.
+
+The plugin relies
+on the prompt change indicator to determine, if there was a change made by cli_config.
+If a change causes asterisk to appear before prompt, then the task is considered as changed.
 
 RESTRICTIONS:
 * If there were unsaved changes on a device before running cli_conifg task it will be assumed as changed.
-* Plugin doesn't support `--check` mode for dry-run.
+* This plugin does support neither `--diff` mode nor `--check` mode.
 
 
 ### MD MODE

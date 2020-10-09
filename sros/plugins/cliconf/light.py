@@ -9,7 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = """
 ---
 author: Nokia
-cliconf: nokia.sros.classic_light
+cliconf: nokia.sros.light
 short_description: Cliconf plugin to configure and run CLI commands on Nokia SR OS devices with no rollback support (classic mode).
 description:
   - This plugin provides low level abstraction APIs for sending CLI commands and
@@ -65,7 +65,7 @@ class Cliconf(CliconfBase):
 
     def get_device_info(self):
         device_info = dict()
-        device_info['network_os'] = 'nokia.sros.classic_light'
+        device_info['network_os'] = 'nokia.sros.light'
         device_info['network_os_platform'] = 'Nokia 7xx0'
 
         reply = self.get('show system information')
@@ -134,7 +134,7 @@ class Cliconf(CliconfBase):
             raise ValueError("Nokia SROS node is not running in classic mode. Use ansible_network_os=nokia.sros.md")
 
         if not commit:
-            raise ValueError("Changes without commit or in --check mode are not supported by classic_light plugin.")
+            raise ValueError("Changes without commit or in --check mode are not supported by light plugin.")
 
         requests = []
         responses = []
