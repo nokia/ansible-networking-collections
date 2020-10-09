@@ -58,10 +58,12 @@ Example result:
 None
 
 ## Plugins
-|     Network OS     | terminal | cliconf | netconf |
-|--------------------|:--------:|:-------:|:-------:|
-| nokia.sros.md      |     Y    |    Y    |    Y    |
-| nokia.sros.classic |     Y    |    Y    |    -    |
+|     Network OS           | terminal | cliconf | netconf |
+|--------------------------|:--------:|:-------:|:-------:|
+| nokia.sros.md            |     Y    |    Y    |    Y    |
+| nokia.sros.classic       |     Y    |    Y    |    -    |
+| nokia.sros.classic_light |     Y    |    Y    |    -    |
+
 
 ### CLASSIC MODE
 In the case of classic CLI we are relying on the built-in rollback feature.
@@ -78,6 +80,9 @@ For example:
 
 This Ansible collection also contains a playbook, on how to enable rollbacks:
 [sros_classic_cli_commission.yml](https://raw.githubusercontent.com/nokia/ansible-networking-collections/master/sros/playbooks/sros_classic_cli_commission.yml).
+
+Note: if platform of SROS release doesn't support rollback use classic_light plugin.
+
 
 Snapshot/rollback is used the following way:
 * A new temporary rollback checkpoint is created at the beginning of every
@@ -112,6 +117,17 @@ RESTRICTIONS:
 * Changes are always written directly to running
 * Operation replace is currently not supported
 * The oldest rollback checkpoint is removed after plugin operation.
+
+
+### CLASSIC_LIGHT MODE
+This mode is for older releases which do not support rollback feature.
+Instead of rollback feature this plugin relies on prompt analysis to determine if there was a change made by cli_config
+ task. If a change causes asterisk to appear before prompt, then the task is considered as changed.
+
+RESTRICTIONS:
+* If there were unsaved changes on a device before running cli_conifg task it will be assumed as changed.
+* Plugin doesn't support `--check` mode for dry-run.
+
 
 ### MD MODE
 To have the NETCONF plugin working, PR [#65718](https://github.com/ansible/ansible/pull/65718) has been integrated into `ansible:devel`. So the change should become active as part of the next Ansible release, which is Ansible 2.10.
