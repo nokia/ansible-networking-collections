@@ -7,6 +7,12 @@ This [collection](https://galaxy.ansible.com/nokia/sros) is to provide automatio
 
 ## Installation
 Distribution is via [ansible-galaxy](https://galaxy.ansible.com/).
+
+Make sure you have the Ansible [netcommon](https://galaxy.ansible.com/ansible/netcommon) collection installed:
+```bash
+ansible-galaxy collection install ansible.netcommon
+```
+
 To install this collection, please use the following command:
 ```bash
 ansible-galaxy collection install nokia.sros

@@ -1,6 +1,6 @@
 namespace: nokia
 name: sros
-version: 1.5.0
+version: 1.6.0
 readme: README.md
 authors:
 - Sven Wisotzky <sven.wisotzky@nokia.com>
