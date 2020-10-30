@@ -30,7 +30,7 @@ To use this collection make sure to set `ansible_network_os=nokia.sros.{mode}` i
 * Ansible 2.9 or newer
 
 ## Supported Nokia SR OS versions
-Tested with SR OS 19.5, 19.7 and 19.10
+Tested with SR OS 19.5, 19.7, 19.10 and 20.5
 
 ## Playbooks
 ### Classic CLI
@@ -140,8 +140,3 @@ RESTRICTIONS:
 * If there were unsaved changes on a device before running cli_conifg task it will be assumed as changed.
 * This plugin does support neither `--diff` mode nor `--check` mode.
 
-
-### MD MODE
-To have the NETCONF plugin working, PR [#65718](https://github.com/ansible/ansible/pull/65718) has been integrated into `ansible:devel`. So the change should become active as part of the next Ansible release, which is Ansible 2.10.
-
-PR [#65991](https://github.com/ansible/ansible/pull/65991) is tracking the backporting of this fix into Ansible 2.9.
