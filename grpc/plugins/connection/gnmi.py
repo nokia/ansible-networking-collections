@@ -497,7 +497,7 @@ class Connection(NetworkConnectionBase):
             raise AnsibleConnectionFailure("Ansible gNMI plugin does not support encoding for value: %s" % json.dumps(val))
 
     def _dictToList(self, aDict):
-        for key in aDict.keys():
+        for key in list(aDict):
             if key.startswith('___'):
                 aDict[key[3:]] = [self._dictToList(val) if isinstance(val, dict) else val for val in aDict[key].values()]
                 del aDict[key]
