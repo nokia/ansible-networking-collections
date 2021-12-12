@@ -437,9 +437,11 @@ class Connection(NetworkConnectionBase):
 
                 # Support namespaces with 'origin', required for openconfig
                 ns = e.split(":")
-                if len(ns)>1:
+                if len(ns)==2:
                     origin['origin'] = ns[0]
                     e = ns[1]
+                elif len(ns)>2:
+                    raise AnsibleConnectionFailure(f"Invalid path syntax: {e}")
                 entry = {'name': e.split("[", 1)[0]}
                 eKeys = re.findall('\[(.*?)\]', e)
                 dKeys = dict(x.split('=', 1) for x in eKeys)
