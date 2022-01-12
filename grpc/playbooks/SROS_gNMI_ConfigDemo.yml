@@ -16,7 +16,7 @@
 
   tasks:
   - name: Get Nodal Configuration (Selective Branches)
-    gnmi_get:
+    nokia.grpc.gnmi_get:
       type: CONFIG
       prefix: /configure
       path:
@@ -31,7 +31,7 @@
       msg: '{{ testout.output }}'
 
   - name: Update Nodal Configuration (using gNMI SET)
-    gnmi_config:
+    nokia.grpc.gnmi_config:
       prefix: configure
       update:
         - path: system/location
