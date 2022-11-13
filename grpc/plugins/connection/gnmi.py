@@ -265,6 +265,7 @@ class Connection(NetworkConnectionBase):
             )
 
         self._connected = False
+        self._sub_plugin = { 'type': 'external' }
 
     def readFile(self, optionName):
         """
