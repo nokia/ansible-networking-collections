@@ -19,7 +19,7 @@ description:
 options:
   ncclient_device_handler:
     type: str
-    default: default
+    default: sros
     description:
       - Specifies the ncclient device-handler name for Nokia SR OS. Please refer to
         the ncclient library documentation for details.
