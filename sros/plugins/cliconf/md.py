@@ -218,6 +218,7 @@ class Cliconf(CliconfBase):
                 self.send_command('discard')
             else:
                 self.send_command('edit-config read-only')
+                self.send_command('environment more false')
                 response = self.send_command(cmd.strip())
             self.send_command('quit-config')
 
